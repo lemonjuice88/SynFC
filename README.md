@@ -12,6 +12,9 @@ look like an actual club's decision-making process, not a chatbot that
 happens to know football trivia.
 
 **Live demo:** [synfc-website-1uuw.onrender.com](https://synfc-website-1uuw.onrender.com)
+— the Agent Interface and Analyst pages (where you can actually ask it
+something) are gated behind an access key so the underlying LLM calls
+don't run away unbounded. Use `LOdJJykFJI19O_AV` to unlock them.
 
 ![SynFC home page](screenshots/home.png)
 

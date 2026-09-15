@@ -16,6 +16,11 @@ happens to know football trivia.
 something) are gated behind an access key so the underlying LLM calls
 don't run away unbounded. Use `LOdJJykFJI19O_AV` to unlock them.
 
+A real run can take a couple of minutes — it's genuinely 15-30+ LLM
+calls across departments and debate rounds, and it currently runs on
+DeepSeek's cheaper Flash model to keep the demo affordable, not the
+fastest one available. Slow, not stuck.
+
 ![SynFC home page](screenshots/home.png)
 
 ![SynFC architecture — live system map](screenshots/architecture.png)

@@ -11,6 +11,12 @@ Board of Directors renders the final call. The whole thing is built to
 look like an actual club's decision-making process, not a chatbot that
 happens to know football trivia.
 
+**Live demo:** [synfc-website-1uuw.onrender.com](https://synfc-website-1uuw.onrender.com)
+
+![SynFC home page](screenshots/home.png)
+
+![SynFC architecture — live system map](screenshots/architecture.png)
+
 ## Why this exists
 
 Most "AI + football" demos are really just an LLM's memorized
@@ -161,12 +167,12 @@ cd synfc_engine
 python engine.py
 ```
 
-### Running the website against the live engine
+### Running a frontend against the live engine
 
-The website (`website/`) talks to the engine through a small FastAPI/
-SSE wrapper (`server.py`), which streams each step of a run to the
-browser live — the same step-by-step reveal the CLI prints to a
-terminal, just rendered as a real UI.
+The [live demo](https://synfc-website-1uuw.onrender.com) talks to the
+engine through a small FastAPI/SSE wrapper (`server.py`), which
+streams each step of a run to the browser live — the same step-by-step
+reveal the CLI prints to a terminal, just rendered as a real UI.
 
 ```bash
 # add SYNFC_ACCESS_KEY=... to .env first (see .env.example)
@@ -174,9 +180,10 @@ cd synfc_engine
 python server.py
 ```
 
-Then open `website/index.html`. The access key is never committed to
-the repo — share it with whoever you want testing the demo out of
-band, not by putting it in code.
+Point any frontend's `SYNFC_API_BASE` at wherever this ends up
+running. The access key is never committed to this repo — share it
+with whoever you want testing the demo out of band, not by putting it
+in code.
 
 ## Known limitations
 
@@ -201,7 +208,6 @@ sentence-transformers, FAISS, SQLite, pandas, FastAPI.
 synfc_engine/    core engine: shared state/LLM wrapper, the router, the graph, the CLI
 Tools/           external data sources: scraping, RAG, SQL, live search
 Sub_Teams/       the 7 departments
-website/         static frontend, talks to server.py over SSE
 data/            local datasets
 ML_playground/   independent ML experiments, not wired into the engine
 DEBUG_NOTES.md   real bugs hit during development, kept as a reference

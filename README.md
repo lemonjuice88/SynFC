@@ -11,10 +11,6 @@ Board of Directors renders the final call. The whole thing is built to
 look like an actual club's decision-making process, not a chatbot that
 happens to know football trivia.
 
-**Live demo:** [synfc-website-1uuw.onrender.com](https://synfc-website-1uuw.onrender.com)
-— this repo is the engine; the frontend is a separate project that
-talks to it over SSE.
-
 ## Why this exists
 
 Most "AI + football" demos are really just an LLM's memorized
@@ -165,8 +161,12 @@ cd synfc_engine
 python engine.py
 ```
 
-To serve a frontend against the live engine, start the API server and
-give it an access key:
+### Running the website against the live engine
+
+The website (`website/`) talks to the engine through a small FastAPI/
+SSE wrapper (`server.py`), which streams each step of a run to the
+browser live — the same step-by-step reveal the CLI prints to a
+terminal, just rendered as a real UI.
 
 ```bash
 # add SYNFC_ACCESS_KEY=... to .env first (see .env.example)
@@ -174,26 +174,9 @@ cd synfc_engine
 python server.py
 ```
 
-This exposes `/api/consult` (SSE) and `/api/health` /
-`/api/verify-key`. Point any frontend's `SYNFC_API_BASE` at wherever
-this ends up running, and share the access key with whoever you want
-testing it out of band -- it's never committed to this repo.
-
-## Deploying
-
-A `render.yaml` blueprint at the repo root deploys the engine API to
-Render (import the repo via "New +" -> "Blueprint" on
-[Render's dashboard](https://dashboard.render.com), then add the 3
-secret env vars -- `DEEPSEEK_API_KEY`, `PERPLEXITY_API_KEY`,
-`SYNFC_ACCESS_KEY` -- on the resulting service). A root-level
-`Dockerfile` is also provided for any Docker-based host (Cloud Run,
-etc.) with more memory headroom than Render's free tier.
-
-Note: sentence-transformers + torch (the Legal department's FIFA-
-regulation search) need real memory to load the embedding model. On
-Render's free plan (512MB RAM), a real run can OOM -- `requirements.txt`
-pins the CPU-only torch build to help, but a host with more memory
-(e.g. Cloud Run, via the Dockerfile) is the reliable fix.
+Then open `website/index.html`. The access key is never committed to
+the repo — share it with whoever you want testing the demo out of
+band, not by putting it in code.
 
 ## Known limitations
 
@@ -218,6 +201,7 @@ sentence-transformers, FAISS, SQLite, pandas, FastAPI.
 synfc_engine/    core engine: shared state/LLM wrapper, the router, the graph, the CLI
 Tools/           external data sources: scraping, RAG, SQL, live search
 Sub_Teams/       the 7 departments
+website/         static frontend, talks to server.py over SSE
 data/            local datasets
 ML_playground/   independent ML experiments, not wired into the engine
 DEBUG_NOTES.md   real bugs hit during development, kept as a reference

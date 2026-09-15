@@ -3,7 +3,8 @@
 **Syn**thetic + **Syn**ergy + **Syn**apse — a LangGraph-based multi-agent
 system that simulates how a football club actually makes decisions.
 
-Ask it something — *"Would Ernest Poku suit Beşiktaş?"*, *"What's
+Ask it something — *"What do you think about Enzo Fernández transferring
+to Manchester City?"*, *"What's
 Victor Osimhen's injury history?"*, *"Who is our club interested in?"*
 — and it routes the question to the relevant departments. Each one
 forms a real, data-grounded opinion. If they disagree, they debate. A

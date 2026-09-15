@@ -1,0 +1,32 @@
+# SynFC — core engine dependencies
+
+# CPU-only torch (sentence-transformers' dependency): the default PyPI
+# wheel bundles the full CUDA stack (~2GB+: nvidia-cublas, cudnn, etc.)
+# which isn't just wasted disk/build time -- it blew straight through
+# Render's free-tier 512MB RAM at startup even before any request came
+# in. --index-url here is torch's own CPU-only wheel host; the
+# --extra-index-url fallback covers every other package below (they
+# aren't hosted there, pip falls back to normal PyPI for them).
+--index-url https://download.pytorch.org/whl/cpu
+--extra-index-url https://pypi.org/simple
+
+langgraph
+openai
+python-dotenv
+curl_cffi
+beautifulsoup4
+lxml
+pandas
+html5lib
+pdfplumber
+sentence-transformers
+faiss-cpu
+
+# --- server.py (HTTP/SSE API layer for the website) ---
+fastapi
+uvicorn[standard]
+
+# --- ML_playground/ (independent experiments, not wired into the engine) ---
+# tensorflow
+# scikit-learn
+# matplotlib

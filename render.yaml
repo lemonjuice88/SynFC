@@ -1,0 +1,26 @@
+# Render Blueprint — deploys the engine API. Import this repo on
+# https://dashboard.render.com ("New +" -> "Blueprint") and Render will
+# read this file automatically, then open the synfc-engine service ->
+# Environment -> add the 3 secret vars below (their real values live
+# only in your local .env, never in this repo).
+#
+# Note: sentence-transformers + torch (used by the Legal department's
+# FIFA-regulation search) need real memory to load the embedding
+# model. The free instance (512MB RAM) may OOM on a real run -- see
+# the repo-root Dockerfile for deploying to a host with more headroom
+# (e.g. Cloud Run) instead.
+
+services:
+  - type: web
+    name: synfc-engine
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: cd synfc_engine && uvicorn server:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: DEEPSEEK_API_KEY
+        sync: false
+      - key: PERPLEXITY_API_KEY
+        sync: false
+      - key: SYNFC_ACCESS_KEY
+        sync: false

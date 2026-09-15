@@ -1,0 +1,8 @@
+venv/
+.env
+.git/
+__pycache__/
+*.pyc
+website/
+ML_playground/
+SynFC_fikirler.txt
